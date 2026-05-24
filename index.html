@@ -415,22 +415,16 @@
   .editor-photo {
     width: 120px;
     height: 150px;
-    background: var(--paper-warm);
     border: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
   }
-  .editor-photo svg { opacity: 0.25; }
-  .editor-photo span {
-    font-family: 'DM Mono', monospace;
-    font-size: 8px;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    text-align: center;
+  .editor-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
   }
   .editor-label {
     font-family: 'DM Mono', monospace;
@@ -735,15 +729,14 @@
   <div id="board" class="section-header"><h2>Editorial Board</h2></div>
   <div class="editor-card">
     <div class="editor-photo">
-      <svg viewBox="0 0 24 24" width="40" height="40" fill="#999"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-      <span>Photo<br>here</span>
+      <img src="serdardemirgan.jpeg" alt="Doç. Dr. Serdar Demirgan">
     </div>
     <div>
       <div class="editor-label">Editor-in-Chief</div>
-      <div class="editor-name">Rasim Onur Karaoğlu, MD</div>
-      <div class="editor-title">Specialist in Anesthesiology & Vascular Access · Founder, JCVA</div>
+      <div class="editor-name">Assoc. Prof. Serdar Demirgan, MD, PhD</div>
+      <div class="editor-title">Associate Professor of Anesthesiology & Reanimation · Bağcılar Training and Research Hospital, Istanbul</div>
       <div class="editor-bio">
-        Dr. Karaoğlu is a clinician and researcher with expertise in vascular access, ultrasound-guided procedures, and perioperative medicine. He founded JCVA to create a dedicated open-access platform for the growing vascular access community.
+        Doç. Dr. Demirgan is an Associate Professor in the Department of Anesthesiology and Reanimation at Bağcılar Training and Research Hospital, Istanbul. With expertise in perioperative medicine, vascular access, and critical care, he leads JCVA as a dedicated platform for clinical and scientific advancement in vascular access practice.
       </div>
     </div>
   </div>
