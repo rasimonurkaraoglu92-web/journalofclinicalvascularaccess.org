@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JCVA — Journal of Clinical Vascular Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson:       #8B0000;
+    --crimson-mid:   #A31515;
+    --crimson-light: #C0392B;
+    --crimson-pale:  #F5DCDC;
+    --gold:          #C9A84C;
+    --gold-light:    #E8CB7A;
+    --ink:           #1A0A0A;
+    --ink-mid:       #2D1010;
+    --paper:         #FAF5F0;
+    --paper-warm:    #F2EAE0;
+    --text:          #2C1A1A;
+    --text-muted:    #6B4848;
+    --border:        rgba(139,0,0,0.15);
+    --shadow:        rgba(139,0,0,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    border-bottom: 2px solid var(--crimson);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 56px;
+  }
+  .nav-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    padding: 80px 40px 70px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(139,0,0,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* Decorative vertical rule */
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--crimson-mid), var(--gold), var(--crimson-mid), transparent);
+    opacity: 0.5;
+  }
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 32px;
+  }
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-label::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .hero h1 span {
+    color: var(--crimson-light);
+    font-style: italic;
+  }
+  .hero-full {
+    font-family: 'Source Serif 4', serif;
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+  }
+  .hero-desc {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    max-width: 540px;
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .hero-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.5);
+    border-radius: 2px;
+  }
+  .hero-badge.accent {
+    border-color: var(--crimson-mid);
+    color: var(--crimson-pale);
+    background: rgba(139,0,0,0.25);
+  }
+
+  /* ─── WRAPPER ─── */
+  .wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    margin-top: 64px;
+  }
+  .section-header h2 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--crimson);
+  }
+  .section-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── ABOUT SPLIT ─── */
+  .about-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    padding: 40px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .about-left h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .about-left p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.85;
+  }
+  .about-right {
+    border-left: 2px solid var(--crimson);
+    padding-left: 32px;
+  }
+  .stat-row {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ─── SCOPE GRID ─── */
+  .scope-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .scope-card {
+    background: var(--paper);
+    padding: 28px 24px;
+    transition: background 0.2s;
+  }
+  .scope-card:hover { background: var(--paper-warm); }
+  .scope-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--crimson);
+    border-radius: 2px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .scope-icon svg { width: 16px; height: 16px; fill: #fff; }
+  .scope-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .scope-card p {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ─── CALL FOR PAPERS ─── */
+  .cfp {
+    background: var(--ink);
+    border-left: 4px solid var(--gold);
+    padding: 44px 48px;
+    margin: 0 0 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cfp::before {
+    content: 'CFP';
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(139,0,0,0.12);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .cfp-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .cfp h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .cfp p {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    max-width: 480px;
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
+  .cfp-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .cfp-deadline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+  .cfp-deadline strong {
+    color: var(--gold-light);
+    display: block;
+    font-size: 16px;
+    letter-spacing: 0;
+    margin-top: 2px;
+  }
+  .btn-cfp {
+    display: inline-block;
+    background: var(--crimson);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-cfp:hover { background: var(--crimson-light); }
+
+  /* ─── ARTICLE TYPES ─── */
+  .badge-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 48px;
+  }
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: #fff;
+    border-radius: 1px;
+  }
+  .badge.primary {
+    border-color: var(--crimson);
+    color: var(--crimson);
+    background: rgba(139,0,0,0.04);
+  }
+
+  /* ─── EDITOR ─── */
+  .editor-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 32px;
+    align-items: start;
+    padding: 36px;
+    border: 1px solid var(--border);
+    background: #fff;
+    margin-bottom: 48px;
+  }
+  .editor-photo {
+    width: 120px;
+    height: 150px;
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .editor-photo svg { opacity: 0.25; }
+  .editor-photo span {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .editor-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 8px;
+  }
+  .editor-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .editor-title {
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .editor-bio {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* ─── ETHICS / SUBMIT / CONTACT ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .info-card {
+    padding: 28px;
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+  .info-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 14px;
+  }
+  .info-card p, .info-card li {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.85;
+  }
+  .info-card ul { padding-left: 18px; }
+  .info-card a {
+    color: var(--crimson);
+    text-decoration: none;
+    font-weight: 400;
+  }
+  .info-card a:hover { text-decoration: underline; }
+
+  /* ─── AHEAD OF PRINT ─── */
+  .aop-block {
+    border-left: 3px solid var(--crimson);
+    padding: 20px 24px;
+    background: #fff;
+    margin-bottom: 48px;
+  }
+  .aop-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--ink);
+    display: inline-block;
+    padding: 3px 8px;
+    margin-bottom: 12px;
+  }
+  .aop-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .aop-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    border-top: 2px solid var(--crimson);
+    padding: 36px 40px;
+    margin-top: 64px;
+  }
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .footer-brand span { color: var(--crimson-light); font-style: italic; }
+  .footer-info {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+    text-align: right;
+    line-height: 1.8;
+  }
+  .footer-info a { color: rgba(255,255,255,0.5); text-decoration: none; }
+  .footer-info a:hover { color: var(--gold-light); }
+
+  @media (max-width: 700px) {
+    .about-split, .scope-grid, .two-col { grid-template-columns: 1fr; }
+    .scope-grid { background: transparent; gap: 12px; }
+    .editor-card { grid-template-columns: 1fr; }
+    nav { padding: 0 20px; }
+    .nav-links { gap: 16px; }
+    .hero { padding: 48px 20px; }
+    .hero::after { left: 20px; }
+    .hero-inner { padding-left: 20px; }
+    .wrapper { padding: 0 20px; }
+    .cfp { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">JCVA</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#scope">Scope</a></li>
+    <li><a href="#submit">Submit</a></li>
+    <li><a href="#board">Board</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Open Access · Peer-Reviewed · Est. 2026</div>
+    <h1>JC<span>VA</span></h1>
+    <div class="hero-full">Journal of Clinical Vascular Access</div>
+    <p class="hero-desc">
+      Dedicated to advancing the science and practice of vascular access — from peripheral cannulation to complex central venous procedures, guided by ultrasound and clinical evidence.
+    </p>
+    <div class="hero-badges">
+      <span class="hero-badge accent">Vascular Access</span>
+      <span class="hero-badge accent">Central Venous Catheters</span>
+      <span class="hero-badge accent">PICC · Port · Dialysis</span>
+      <span class="hero-badge">Ultrasound Guidance</span>
+      <span class="hero-badge">Perioperative Care</span>
+      <span class="hero-badge">Complications & Safety</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper">
+
+  <!-- ABOUT -->
+  <div id="about" class="section-header"><h2>About</h2></div>
+  <div class="about-split">
+    <div class="about-left">
+      <h3>A focused forum for vascular access science</h3>
+      <p>
+        JCVA publishes original research, reviews, technical notes, and case reports covering all aspects of vascular access — from bedside peripheral insertion to long-term central venous device management. Our scope bridges critical care, surgery, oncology, nephrology, and interventional practice.
+      </p>
+      <br>
+      <p>
+        We are committed to open-access dissemination, rigorous peer review, and rapid editorial decisions to serve clinicians and researchers worldwide.
+      </p>
+    </div>
+    <div class="about-right">
+      <div class="stat-row">
+        <div class="stat-label">Publisher</div>
+        <div class="stat-value">JCVA Editorial Office</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">Access Model</div>
+        <div class="stat-value">Open Access</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">Publication Frequency</div>
+        <div class="stat-value">Quarterly</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">First Issue</div>
+        <div class="stat-value">Vol. 1, Issue 1 — 2026</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">Languages</div>
+        <div class="stat-value">English</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCOPE -->
+  <div id="scope" class="section-header"><h2>Aims & Scope</h2></div>
+  <div class="scope-grid">
+    <div class="scope-card">
+      <div class="scope-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      </div>
+      <h4>Central Venous Access</h4>
+      <p>CVC insertion techniques, tunneled catheters, implantable ports, PICC lines, and hemodialysis access management.</p>
+    </div>
+    <div class="scope-card">
+      <div class="scope-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </div>
+      <h4>Ultrasound Guidance</h4>
+      <p>Real-time sonographic guidance for vascular procedures, sonoanatomy, needle visualization, and point-of-care applications.</p>
+    </div>
+    <div class="scope-card">
+      <div class="scope-icon">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      </div>
+      <h4>Peripheral Vascular Access</h4>
+      <p>Difficult venous access, midline catheters, pediatric and neonatal access, arterial lines, and IO access techniques.</p>
+    </div>
+    <div class="scope-card">
+      <div class="scope-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.18V11c0 3.5-2.33 6.79-5 7.93-2.67-1.14-5-4.43-5-7.93V7.18L12 5z"/></svg>
+      </div>
+      <h4>Complications & Safety</h4>
+      <p>Catheter-related infections, thrombosis, malposition, mechanical complications, and quality improvement initiatives.</p>
+    </div>
+    <div class="scope-card">
+      <div class="scope-icon">
+        <svg viewBox="0 0 24 24"><path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm1 14.5h-2v-2h2v2zm0-4h-2c0-3.25 3-3 3-5 0-1.1-.9-2-2-2s-2 .9-2 2h-2c0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.5-3 2.75-3 5z"/></svg>
+      </div>
+      <h4>Education & Simulation</h4>
+      <p>Vascular access training programs, simulation-based education, competency assessment, and curriculum development.</p>
+    </div>
+    <div class="scope-card">
+      <div class="scope-icon">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+      </div>
+      <h4>Device Innovation</h4>
+      <p>Novel catheter technologies, insertion devices, tip confirmation systems, securement, and biocompatibility research.</p>
+    </div>
+  </div>
+
+  <!-- CALL FOR PAPERS -->
+  <div class="cfp">
+    <div class="cfp-label">Now Open</div>
+    <h2>Call for Papers<br>Vol. 1, Issue 1 — 2026</h2>
+    <p>JCVA welcomes original research, systematic reviews, case reports, and technical notes for its inaugural issue. All article types considered; no publication fees.</p>
+    <div class="cfp-row">
+      <div class="cfp-deadline">
+        Submission Deadline
+        <strong>October 31, 2026</strong>
+      </div>
+      <a class="btn-cfp" href="mailto:editor@journalofclinicalvascularaccess.org">Submit Manuscript →</a>
+    </div>
+  </div>
+
+  <!-- ARTICLE TYPES -->
+  <div class="section-header"><h2>Article Types</h2></div>
+  <div class="badge-cloud" style="margin-bottom: 48px;">
+    <span class="badge primary">Original Research</span>
+    <span class="badge primary">Systematic Review & Meta-Analysis</span>
+    <span class="badge primary">Case Reports</span>
+    <span class="badge primary">Technical Notes</span>
+    <span class="badge">Narrative Review</span>
+    <span class="badge">Cadaveric & Simulation Studies</span>
+    <span class="badge">Sonoanatomy Images</span>
+    <span class="badge">Educational Articles</span>
+    <span class="badge">Letters to the Editor</span>
+    <span class="badge">Editorials</span>
+  </div>
+
+  <!-- AHEAD OF PRINT -->
+  <div class="section-header"><h2>Ahead of Print</h2></div>
+  <div class="aop-block">
+    <span class="aop-tag">Ahead of Print</span>
+    <div class="aop-title">Ultrasound-guided PICC insertion in oncology patients: a prospective cohort study</div>
+    <div class="aop-meta">Karaoğlu RO et al. · JCVA 2026 · DOI: pending</div>
+  </div>
+
+  <!-- EDITOR -->
+  <div id="board" class="section-header"><h2>Editorial Board</h2></div>
+  <div class="editor-card">
+    <div class="editor-photo">
+      <svg viewBox="0 0 24 24" width="40" height="40" fill="#999"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+      <span>Photo<br>here</span>
+    </div>
+    <div>
+      <div class="editor-label">Editor-in-Chief</div>
+      <div class="editor-name">Rasim Onur Karaoğlu, MD</div>
+      <div class="editor-title">Specialist in Anesthesiology & Vascular Access · Founder, JCVA</div>
+      <div class="editor-bio">
+        Dr. Karaoğlu is a clinician and researcher with expertise in vascular access, ultrasound-guided procedures, and perioperative medicine. He founded JCVA to create a dedicated open-access platform for the growing vascular access community.
+      </div>
+    </div>
+  </div>
+
+  <!-- ETHICS + SUBMIT -->
+  <div id="submit" class="section-header"><h2>Ethics & Submission</h2></div>
+  <div class="two-col">
+    <div class="info-card">
+      <h3>Publication Ethics</h3>
+      <p>JCVA adheres to COPE (Committee on Publication Ethics) guidelines. All submissions must include:</p>
+      <ul style="margin-top:10px;">
+        <li>Ethics committee approval (if applicable)</li>
+        <li>Informed consent statement</li>
+        <li>Conflict of interest declaration</li>
+        <li>Author contribution statement (CRediT)</li>
+        <li>Data availability statement</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>How to Submit</h3>
+      <p>Manuscripts are currently accepted by email while our online system is under development.</p>
+      <p style="margin-top:12px;">Send your manuscript, title page, cover letter, and supplementary files to:</p>
+      <p style="margin-top:10px; font-size:15px;"><a href="mailto:editor@journalofclinicalvascularaccess.org">editor@journalofclinicalvascularaccess.org</a></p>
+      <p style="margin-top:12px;">We aim to provide an initial editorial decision within <strong>14 days</strong> of submission.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact" class="section-header"><h2>Contact</h2></div>
+  <div class="info-card" style="margin-bottom:64px;">
+    <h3>Editorial Office</h3>
+    <p><strong>Journal of Clinical Vascular Access (JCVA)</strong></p>
+    <p>Website: <a href="https://journalofclinicalvascularaccess.org">journalofclinicalvascularaccess.org</a></p>
+    <p>Editorial email: <a href="mailto:editor@journalofclinicalvascularaccess.org">editor@journalofclinicalvascularaccess.org</a></p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">JC<span>VA</span></div>
+    <div class="footer-info">
+      © 2026 Journal of Clinical Vascular Access<br>
+      <a href="https://journalofclinicalvascularaccess.org">journalofclinicalvascularaccess.org</a> · <a href="mailto:editor@journalofclinicalvascularaccess.org">editor@journalofclinicalvascularaccess.org</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
